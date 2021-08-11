@@ -88,6 +88,8 @@ namespace Game_Ball_Task
                   }
 
                   }
+                else
+                    output_values.Add(0);
             }      
         }
         //-----------------------------------display_output--------------------------//
