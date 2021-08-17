@@ -67,23 +67,23 @@ namespace Game_Ball_Task
                 var start_year = Convert.ToInt32(one_entry[1].Split("/")[2]);
                 var duration = Convert.ToInt32(one_entry[2]);
                 var end_year = start_year + duration;
-                var end_month = Convert.ToInt32(one_entry[1].Split("/")[1]);
+                var start_month = Convert.ToInt32(one_entry[1].Split("/")[1]);
 
                 //-------------------------profit_calculation----------------------------------//
                 if (end_year > year)                
-                    output_values.Add(calculation_helper(one_entry[5], Convert.ToDouble(one_entry[6])));          
+                    output_values.Add(calculation_helper(one_entry[5], Convert.ToDouble(one_entry[6]),start_month));          
                 else
 
                   if (end_year == year)
                   {
-                    if (month > end_month)                     
+                    if (month > start_month)                     
                         output_values.Add(0);                    
                     else
                     {
-                        if (end_month == month)
+                        if (start_month == month)
                             year_check = true;
 
-                        output_values.Add(calculation_helper(one_entry[5], Convert.ToDouble(one_entry[6])));
+                        output_values.Add(calculation_helper(one_entry[5], Convert.ToDouble(one_entry[6]),start_month));
 
                   }
 
@@ -109,13 +109,13 @@ namespace Game_Ball_Task
             }
         }
         //--------------------------------------calculation_helper------------------------------------//
-        static double calculation_helper(String pay_cycle, double pay)
+        static double calculation_helper(String pay_cycle, double pay, int start_month)
         { 
             if (pay_cycle == "monthly")
                 return pay;
             else
-               if (pay_cycle == "quarterly")
-                return pay * (month / 3);
+               if (pay_cycle == "quarterly" && (month-start_month)%3==0)
+                return pay ;
 
             else
                 if (pay_cycle == "yearly" && year_check)
